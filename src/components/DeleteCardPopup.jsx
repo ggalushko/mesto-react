@@ -1,8 +1,8 @@
-import { PopUpWithForm } from "./PopUpWithForm";
+import { PopupWithForm } from "./PopupWithForm";
 
 export function DeleteCardPopup({ isOpened, onClose }) {
   return (
-    <PopUpWithForm
+    <PopupWithForm
       name="delete-card"
       title="Вы уверены?"
       buttonText="Да"
@@ -10,6 +10,6 @@ export function DeleteCardPopup({ isOpened, onClose }) {
       onClose={onClose}
     >
       <p className="error-message link-error"></p>
-    </PopUpWithForm>
+    </PopupWithForm>
   );
 }

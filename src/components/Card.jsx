@@ -1,5 +1,3 @@
-import React from "react";
-
 export function Card({ name, link, likes, onClick }) {
   return (
     <article className="card">

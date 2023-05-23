@@ -1,4 +1,4 @@
-export function PopUpWithForm({
+export function PopupWithForm({
   title,
   name,
   buttonText = "Сохранить",

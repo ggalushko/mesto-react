@@ -1,8 +1,8 @@
-import { PopUpWithForm } from "./PopUpWithForm";
+import { PopupWithForm } from "./PopupWithForm";
 
 export function ChangeAvatarPopup({ isOpened, onClose }) {
   return (
-    <PopUpWithForm
+    <PopupWithForm
       name="change-avatar"
       title="Редактировать профиль"
       isOpened={isOpened}
@@ -17,6 +17,6 @@ export function ChangeAvatarPopup({ isOpened, onClose }) {
         autoComplete="off"
       />
       <p className="error-message link-error"></p>
-    </PopUpWithForm>
+    </PopupWithForm>
   );
 }

@@ -1,8 +1,8 @@
-import { PopUpWithForm } from "./PopUpWithForm";
+import { PopupWithForm } from "./PopupWithForm";
 
 function EditProfilePopup({ isOpened, onClose }) {
   return (
-    <PopUpWithForm
+    <PopupWithForm
       title="Редактировать профиль"
       name="edit-profile"
       isOpened={isOpened}
@@ -30,7 +30,7 @@ function EditProfilePopup({ isOpened, onClose }) {
         autoComplete="off"
       />
       <p className="error-message about-error"></p>
-    </PopUpWithForm>
+    </PopupWithForm>
   );
 }
 

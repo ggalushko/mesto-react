@@ -1,8 +1,13 @@
-import { PopUpWithForm } from "./PopUpWithForm";
+import { PopupWithForm } from "./PopupWithForm";
 
-export function AddCardPopup({isOpened, onClose}) {
+export function AddCardPopup({ isOpened, onClose }) {
   return (
-    <PopUpWithForm title="Новое место" name="add-card" isOpened={isOpened} onClose={onClose}>
+    <PopupWithForm
+      title="Новое место"
+      name="add-card"
+      isOpened={isOpened}
+      onClose={onClose}
+    >
       <input
         required
         minLength="2"
@@ -23,6 +28,6 @@ export function AddCardPopup({isOpened, onClose}) {
         autoComplete="off"
       />
       <p className="error-message link-error"></p>
-    </PopUpWithForm>
+    </PopupWithForm>
   );
 }
