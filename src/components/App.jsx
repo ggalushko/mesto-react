@@ -1,16 +1,15 @@
-import "./index.css";
-import EditProfilePopup from "./components/EditProfilePopup";
+import "../index.css";
+import EditProfilePopup from "./EditProfilePopup";
 import { useState } from "react";
+import { ChangeAvatarPopup } from "./ChangeAvatarPopup";
+import { ImagePopup } from "./ImagePopup";
+import { AddCardPopup } from "./AddCardPopup";
+import { DeleteCardPopup } from "./DeleteCardPopup";
+import { Header } from "./Header";
+import { Footer } from "./Footer";
+import { Main } from "./Main";
 
-import { ChangeAvatarPopup } from "./components/ChangeAvatarPopup";
-import { ImagePopup } from "./components/ImagePopup";
-import { AddCardPopup } from "./components/AddCardPopup";
-import { DeleteCardPopup } from "./components/DeleteCardPopup";
-import { Header } from "./components/Header";
-import { Footer } from "./components/Footer";
-import { Main } from "./components/Main";
-
-export default function App() {
+export function App() {
   const [editProfilePopupIsOpened, setEditProfilePopupIsOpened] =
     useState(false);
   const [addCardPopupIsOpened, setAddCardPopupIsOpened] = useState(false);
