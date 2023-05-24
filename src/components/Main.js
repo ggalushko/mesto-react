@@ -21,35 +21,41 @@ export function Main({ onEditProfile, onAddCard, onEditAvatar, onCardClick }) {
   }, []);
 
   return (
-    <>
-      <main>
-        <section className="profile">
-          <div className="profile__dark-layout" onClick={onEditAvatar}>
-            <img
-              src={avatarURL || avatar}
-              alt="картинка профиля"
-              className="profile__picture"
+    <main>
+      <section className="profile">
+        <div className="profile__dark-layout" onClick={onEditAvatar}>
+          <img
+            src={avatarURL || avatar}
+            alt="картинка профиля"
+            className="profile__picture"
+          />
+        </div>
+        <h1 className="profile__name">{userName}</h1>
+        <p className="profile__about">{userAbout}</p>
+        <button
+          type="button"
+          className="profile__button profile__button_type_edit"
+          onClick={onEditProfile}
+        />
+        <button
+          type="button"
+          className="profile__button profile__button_type_add"
+          onClick={onAddCard}
+        />
+      </section>
+      <section className="cards">
+        {cards.map((card) => {
+          return (
+            <Card
+              onClick={onCardClick}
+              name={card.name}
+              link={card.link}
+              key={card._id}
+              likes={card.likes.length}
             />
-          </div>
-          <h1 className="profile__name">{userName}</h1>
-          <p className="profile__about">{userAbout}</p>
-          <button
-            type="button"
-            className="profile__button profile__button_type_edit"
-            onClick={onEditProfile}
-          />
-          <button
-            type="button"
-            className="profile__button profile__button_type_add"
-            onClick={onAddCard}
-          />
-        </section>
-        <section className="cards">
-          {cards.map((card) => {
-            return <Card onClick={onCardClick} name={card.name} link={card.link} id={card._id} likes={card.likes.length} />;
-          })}
-        </section>
-      </main>
-    </>
+          );
+        })}
+      </section>
+    </main>
   );
 }

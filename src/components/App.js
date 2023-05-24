@@ -22,42 +22,53 @@ export function App() {
     setSelectedCard({ name: e.target.alt, link: e.target.src });
   };
   const closeAllPopups = (e) => {
+    setEditProfilePopupIsOpened(false);
+    setAddCardPopupIsOpened(false);
+    setChangeAvatarPopupIsOpened(false);
+    setDeleteCardPopupIsOpened(false);
+    setSelectedCard({});
+  };
+
+  const handleClosePopup = (e) => {
     if (
       e.target.classList.contains("popup") ||
       e.target.classList.contains("button-close")
     ) {
-      setEditProfilePopupIsOpened(false);
-      setAddCardPopupIsOpened(false);
-      setChangeAvatarPopupIsOpened(false);
-      setDeleteCardPopupIsOpened(false);
-      setSelectedCard({});
+      closeAllPopups();
     }
   };
+
+  const handleEditProfile = () => setEditProfilePopupIsOpened(true);
+  const handleAddCard = () => setAddCardPopupIsOpened(true);
+  const handleEditAvatar = () => setChangeAvatarPopupIsOpened(true);
 
   return (
     <>
       <Header />
       <Main
-        onEditProfile={() => setEditProfilePopupIsOpened(true)}
-        onAddCard={() => setAddCardPopupIsOpened(true)}
-        onEditAvatar={() => setChangeAvatarPopupIsOpened(true)}
+        onEditProfile={handleEditProfile}
+        onAddCard={handleAddCard}
+        onEditAvatar={handleEditAvatar}
         onCardClick={handleCardClick}
       />
       <Footer />
 
-      <ImagePopup onClose={closeAllPopups} card={selectedCard} />
+      <ImagePopup onClose={handleClosePopup} card={selectedCard} />
       <ChangeAvatarPopup
         isOpened={changeAvatarPopupIsOpened}
-        onClose={closeAllPopups}
+        onClose={handleClosePopup}
       />
       <EditProfilePopup
         isOpened={editProfilePopupIsOpened}
-        onClose={closeAllPopups}
+        onClose={handleClosePopup}
       />
-      <AddCardPopup isOpened={addCardPopupIsOpened} onClose={closeAllPopups} />
+      <AddCardPopup
+        isOpened={addCardPopupIsOpened}
+        onClose={handleClosePopup}
+      />
       <DeleteCardPopup
         isOpened={deleteCardPopupIsOpened}
-        onClose={closeAllPopups}
+        onClose={handleClosePopup}
       />
     </>
   );
