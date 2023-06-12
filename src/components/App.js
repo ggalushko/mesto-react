@@ -86,6 +86,22 @@ export function App() {
       .catch((err) => console.log(err));
   }
 
+  function handleUpdateUser(name, about) {
+    api
+      .editProfile({ name: name, about: about })
+      .then((newInfo) => setCurrentUser(newInfo))
+      .catch((err) => console.log(err));
+    closeAllPopups();
+  }
+  
+  function handleUpdateAvatar(URL) {
+    api
+      .changeAvatar(URL)
+      .then((newInfo) => setCurrentUser(newInfo))
+      .catch((err) => console.log(err));
+    closeAllPopups();
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <Header />
@@ -105,10 +121,12 @@ export function App() {
       <ChangeAvatarPopup
         isOpened={changeAvatarPopupIsOpened}
         onClose={handleClosePopup}
+        onUpdateAvatar={handleUpdateAvatar}
       />
       <EditProfilePopup
         isOpened={editProfilePopupIsOpened}
         onClose={handleClosePopup}
+        onUpdateUser={handleUpdateUser}
       />
       <AddCardPopup
         isOpened={addCardPopupIsOpened}

@@ -1,12 +1,29 @@
+import { useContext, useState, useEffect } from "react";
 import { PopupWithForm } from "./PopupWithForm";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-function EditProfilePopup({ isOpened, onClose }) {
+function EditProfilePopup({ isOpened, onClose, onUpdateUser }) {
+  const currentUser = useContext(CurrentUserContext)
+  useEffect(() => {
+    setName(currentUser.name);
+    setAbout(currentUser.about);
+  }, [currentUser]); 
+
+  const [name, setName] = useState("");
+  const [about, setAbout] = useState("");
+ 
+  function handleSubmit(e) {
+    e.preventDefault();
+    onUpdateUser(name, about)
+  } 
+
   return (
     <PopupWithForm
       title="Редактировать профиль"
       name="edit-profile"
       isOpened={isOpened}
       onClose={onClose}
+      onSubmit={handleSubmit}
     >
       <input
         required
@@ -17,6 +34,8 @@ function EditProfilePopup({ isOpened, onClose }) {
         placeholder="Имя"
         name="name"
         autoComplete="off"
+        value={name}
+        onChange={e => setName(e.target.value)}
       />
       <p className="error-message name-error"></p>
       <input
@@ -28,6 +47,8 @@ function EditProfilePopup({ isOpened, onClose }) {
         placeholder="О себе"
         name="about"
         autoComplete="off"
+        value={about}
+        onChange={e => setAbout(e.target.value)}
       />
       <p className="error-message about-error"></p>
     </PopupWithForm>
