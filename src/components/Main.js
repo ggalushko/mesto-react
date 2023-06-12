@@ -50,6 +50,7 @@ export function Main({
         />
       </section>
       <section className="cards">
+        {console.log(cards)}
         {cards.map((card) => {
           return (
             <Card

@@ -81,12 +81,10 @@ export function App() {
   }
 
   async function handleCardDelete(card) {
-    try {
-      await api.deleteCard(card._id);
-      setCards((newCards) => newCards.filter((c) => card._id !== c._id));
-    } catch (error) {
-      console.log(error);
-    }
+    api
+      .deleteCard(card._id)
+      .then(setCards((newCards) => newCards.filter((c) => card._id !== c._id)))
+      .catch((err) => console.log(err));
   }
 
   function handleUpdateUser(name, about) {
@@ -108,7 +106,7 @@ export function App() {
   function handleAddPlace(card) {
     api
       .addCard(card.name, card.link)
-      .then((cards) => setCards(cards))
+      .then((newCard) => setCards([newCard, ...cards]))
       .catch((err) => console.log(err));
     closeAllPopups();
   }

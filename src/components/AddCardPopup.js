@@ -4,6 +4,7 @@ import { PopupWithForm } from "./PopupWithForm";
 export function AddCardPopup({ isOpened, onClose, onAddPlace }) {
   const nameRef = useRef();
   const linkRef = useRef();
+  
   function handleSubmit(e) {
     e.preventDefault();
     onAddPlace({name: nameRef.current.value, link: linkRef.current.value});
