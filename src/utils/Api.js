@@ -1,5 +1,3 @@
-
-
 class Api {
   constructor(options) {
     this._options = options;
@@ -65,6 +63,7 @@ class Api {
     return this._checkResponse(res);
   }
 
+
   async addLike(id) {
     const res = await fetch(`${this._options.baseURL}/cards/${id}/likes`, {
       method: "PUT",
@@ -105,4 +104,4 @@ export const api = new Api({
     authorization: "47013706-890f-4248-97af-220f7fa64e36",
     "Content-Type": "application/json",
   },
-})
+});

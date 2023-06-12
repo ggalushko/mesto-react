@@ -4,11 +4,19 @@ import { api } from "../utils/Api";
 import { Card } from "./Card";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-export function Main({ onEditProfile, onAddCard, onEditAvatar, onCardClick }) {
+export function Main({
+  cards,
+  setCards,
+  onEditProfile,
+  onAddCard,
+  onEditAvatar,
+  onCardClick,
+  onCardLike,
+}) {
   const currentUser = useContext(CurrentUserContext);
   const { name, about, avatar } = currentUser;
 
-  const [cards, setCards] = useState([]);
+
   useEffect(() => {
     api
       .getInitialCards()
@@ -43,15 +51,7 @@ export function Main({ onEditProfile, onAddCard, onEditAvatar, onCardClick }) {
       </section>
       <section className="cards">
         {cards.map((card) => {
-          return (
-            <Card
-              onClick={onCardClick}
-              name={card.name}
-              link={card.link}
-              key={card._id}
-              likes={card.likes.length}
-            />
-          );
+          return <Card key={card._id} onClick={onCardClick} onLike={onCardLike} card={card} />;
         })}
       </section>
     </main>

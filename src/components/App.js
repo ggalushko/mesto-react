@@ -17,11 +17,11 @@ export function App() {
       .getUserData()
       .then((userData) => {
         setCurrentUser(userData);
-        console.log(userData);
       })
       .catch((err) => console.log(err));
   }, []);
   const [currentUser, setCurrentUser] = useState({});
+  const [cards, setCards] = useState([]);
 
   const [editProfilePopupIsOpened, setEditProfilePopupIsOpened] =
     useState(false);
@@ -54,15 +54,41 @@ export function App() {
   const handleEditProfile = () => setEditProfilePopupIsOpened(true);
   const handleAddCard = () => setAddCardPopupIsOpened(true);
   const handleEditAvatar = () => setChangeAvatarPopupIsOpened(true);
+  function handleCardLike(card) {
+    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+
+    if (!isLiked) {
+      api
+        .addLike(card._id)
+        .then((newCard) => {
+          setCards((state) =>
+            state.map((c) => (c._id === card._id ? newCard : c))
+          );
+        })
+        .catch((err) => console.log(err));
+    } else {
+      api
+        .removeLike(card._id)
+        .then((newCard) => {
+          setCards((state) =>
+            state.map((c) => (c._id === card._id ? newCard : c))
+          );
+        })
+        .catch((err) => console.log(err));
+    }
+  }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <Header />
       <Main
+        cards={cards}
+        setCards={setCards}
         onEditProfile={handleEditProfile}
         onAddCard={handleAddCard}
         onEditAvatar={handleEditAvatar}
         onCardClick={handleCardClick}
+        onCardLike={handleCardLike}
       />
       <Footer />
 
