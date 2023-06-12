@@ -12,6 +12,7 @@ export function Main({
   onEditAvatar,
   onCardClick,
   onCardLike,
+  onCardDelete
 }) {
   const currentUser = useContext(CurrentUserContext);
   const { name, about, avatar } = currentUser;
@@ -51,7 +52,7 @@ export function Main({
       </section>
       <section className="cards">
         {cards.map((card) => {
-          return <Card key={card._id} onClick={onCardClick} onLike={onCardLike} card={card} />;
+          return <Card key={card._id} onClick={onCardClick} onLike={onCardLike} onDelete={onCardDelete} card={card} />;
         })}
       </section>
     </main>

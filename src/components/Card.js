@@ -1,7 +1,7 @@
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import { useContext } from "react";
 
-export function Card({ card, onClick, onLike }) {
+export function Card({ card, onClick, onLike, onDelete }) {
   const userContext = useContext(CurrentUserContext);
   
   const isOwn = card.owner._id === userContext._id;
@@ -10,7 +10,7 @@ export function Card({ card, onClick, onLike }) {
 
   return (
     <article className="card">
-      {isOwn? <button type="reset" className="card__delete-button"/> : null}
+      {isOwn? <button type="reset" className="card__delete-button" onClick={onDelete}/> : null}
       <img src={card.link} alt={card.name} className="card__image" onClick={onClick} />
       <div className="card__info">
         <h2 className="card__name">{card.name}</h2>

@@ -77,6 +77,14 @@ export function App() {
         .catch((err) => console.log(err));
     }
   }
+  function handleCardDelete(card) {
+    api
+      .deleteCard(card.id)
+      .then((newCard) => {
+        setCards((state) => state.filter((c) => c._id !== card._id));
+      })
+      .catch((err) => console.log(err));
+  }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -89,6 +97,7 @@ export function App() {
         onEditAvatar={handleEditAvatar}
         onCardClick={handleCardClick}
         onCardLike={handleCardLike}
+        onCardDelete={handleCardDelete}
       />
       <Footer />
 
