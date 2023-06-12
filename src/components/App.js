@@ -20,8 +20,10 @@ export function App() {
       })
       .catch((err) => console.log(err));
   }, []);
+
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
+  useEffect(() => {}, [cards]);
 
   const [editProfilePopupIsOpened, setEditProfilePopupIsOpened] =
     useState(false);
@@ -77,13 +79,14 @@ export function App() {
         .catch((err) => console.log(err));
     }
   }
-  function handleCardDelete(card) {
-    api
-      .deleteCard(card.id)
-      .then((newCard) => {
-        setCards((state) => state.filter((c) => c._id !== card._id));
-      })
-      .catch((err) => console.log(err));
+
+  async function handleCardDelete(card) {
+    try {
+      await api.deleteCard(card._id);
+      setCards((newCards) => newCards.filter((c) => card._id !== c._id));
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   function handleUpdateUser(name, about) {
@@ -93,11 +96,19 @@ export function App() {
       .catch((err) => console.log(err));
     closeAllPopups();
   }
-  
+
   function handleUpdateAvatar(URL) {
     api
       .changeAvatar(URL)
       .then((newInfo) => setCurrentUser(newInfo))
+      .catch((err) => console.log(err));
+    closeAllPopups();
+  }
+
+  function handleAddPlace(card) {
+    api
+      .addCard(card.name, card.link)
+      .then((cards) => setCards(cards))
       .catch((err) => console.log(err));
     closeAllPopups();
   }
@@ -131,6 +142,7 @@ export function App() {
       <AddCardPopup
         isOpened={addCardPopupIsOpened}
         onClose={handleClosePopup}
+        onAddPlace={handleAddPlace}
       />
       <DeleteCardPopup
         isOpened={deleteCardPopupIsOpened}

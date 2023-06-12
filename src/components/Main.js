@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useEffect, useContext } from "react";
 import defaultAvatar from "../images/user.jpg";
 import { api } from "../utils/Api";
 import { Card } from "./Card";
@@ -12,11 +12,10 @@ export function Main({
   onEditAvatar,
   onCardClick,
   onCardLike,
-  onCardDelete
+  onCardDelete,
 }) {
   const currentUser = useContext(CurrentUserContext);
   const { name, about, avatar } = currentUser;
-
 
   useEffect(() => {
     api
@@ -52,7 +51,15 @@ export function Main({
       </section>
       <section className="cards">
         {cards.map((card) => {
-          return <Card key={card._id} onClick={onCardClick} onLike={onCardLike} onDelete={onCardDelete} card={card} />;
+          return (
+            <Card
+              key={card._id}
+              onClick={onCardClick}
+              onLike={onCardLike}
+              onDelete={onCardDelete}
+              card={card}
+            />
+          );
         })}
       </section>
     </main>

@@ -1,17 +1,17 @@
-import { useState, useContext, useEffect } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { PopupWithForm } from "./PopupWithForm";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 export function ChangeAvatarPopup({ isOpened, onClose, onUpdateAvatar }) {
   const currentUser = useContext(CurrentUserContext);
-  const [inputValue, setInputValue] = useState("");
+  const inputRef = useRef()
 
   function handleSubmit(e) {
     e.preventDefault();
-    onUpdateAvatar(inputValue);
+    onUpdateAvatar(inputRef.current.value);
   }
   useEffect(() => {
-    setInputValue("");
+    inputRef.current.value = ""
   }, [currentUser]);
 
   return (
@@ -29,8 +29,7 @@ export function ChangeAvatarPopup({ isOpened, onClose, onUpdateAvatar }) {
         placeholder="Ссылка на картинку"
         name="link"
         autoComplete="off"
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
+        ref={inputRef}
       />
       <p className="error-message link-error"></p>
     </PopupWithForm>

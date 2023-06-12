@@ -1,12 +1,23 @@
+import { useRef } from "react";
 import { PopupWithForm } from "./PopupWithForm";
 
-export function AddCardPopup({ isOpened, onClose }) {
+export function AddCardPopup({ isOpened, onClose, onAddPlace }) {
+  const nameRef = useRef();
+  const linkRef = useRef();
+  function handleSubmit(e) {
+    e.preventDefault();
+    onAddPlace({name: nameRef.current.value, link: linkRef.current.value});
+    nameRef.current.value = "";
+    linkRef.current.value = "";
+  }
+
   return (
     <PopupWithForm
       title="Новое место"
       name="add-card"
       isOpened={isOpened}
       onClose={onClose}
+      onSubmit={handleSubmit}
     >
       <input
         required
@@ -17,6 +28,7 @@ export function AddCardPopup({ isOpened, onClose }) {
         placeholder="Название"
         name="name"
         autoComplete="off"
+        ref={nameRef}
       />
       <p className="error-message name-error"></p>
       <input
@@ -26,6 +38,7 @@ export function AddCardPopup({ isOpened, onClose }) {
         placeholder="Ссылка на картинку"
         name="link"
         autoComplete="off"
+        ref={linkRef}
       />
       <p className="error-message link-error"></p>
     </PopupWithForm>
