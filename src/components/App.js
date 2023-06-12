@@ -1,15 +1,28 @@
 import "../index.css";
 import EditProfilePopup from "./EditProfilePopup";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ChangeAvatarPopup } from "./ChangeAvatarPopup";
 import { ImagePopup } from "./ImagePopup";
 import { AddCardPopup } from "./AddCardPopup";
 import { DeleteCardPopup } from "./DeleteCardPopup";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
+import { api } from "../utils/Api";
 import { Main } from "./Main";
 
 export function App() {
+  useEffect(() => {
+    api
+      .getUserData()
+      .then((userData) => {
+        setCurrentUser(userData);
+        console.log(userData);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+  const [currentUser, setCurrentUser] = useState({});
+
   const [editProfilePopupIsOpened, setEditProfilePopupIsOpened] =
     useState(false);
   const [addCardPopupIsOpened, setAddCardPopupIsOpened] = useState(false);
@@ -43,7 +56,7 @@ export function App() {
   const handleEditAvatar = () => setChangeAvatarPopupIsOpened(true);
 
   return (
-    <>
+    <CurrentUserContext.Provider value={currentUser}>
       <Header />
       <Main
         onEditProfile={handleEditProfile}
@@ -70,6 +83,6 @@ export function App() {
         isOpened={deleteCardPopupIsOpened}
         onClose={handleClosePopup}
       />
-    </>
+    </CurrentUserContext.Provider>
   );
 }

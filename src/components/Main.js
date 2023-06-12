@@ -1,20 +1,18 @@
-import { useState, useEffect } from "react";
-import avatar from "../images/user.jpg";
+import { useState, useEffect, useContext } from "react";
+import defaultAvatar from "../images/user.jpg";
 import { api } from "../utils/Api";
 import { Card } from "./Card";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 export function Main({ onEditProfile, onAddCard, onEditAvatar, onCardClick }) {
-  const [userName, setUserName] = useState("");
-  const [userAbout, setUserAbout] = useState("");
-  const [avatarURL, setAvatarURL] = useState("");
-  const [cards, setCards] = useState([]);
+  const currentUser = useContext(CurrentUserContext);
+  const { name, about, avatar } = currentUser;
 
+  const [cards, setCards] = useState([]);
   useEffect(() => {
-    Promise.all([api.getUserData(), api.getInitialCards()])
-      .then(([userData, cards]) => {
-        setUserName(userData.name);
-        setUserAbout(userData.about);
-        setAvatarURL(userData.avatar);
+    api
+      .getInitialCards()
+      .then((cards) => {
         setCards(cards);
       })
       .catch((err) => console.log(err));
@@ -25,13 +23,13 @@ export function Main({ onEditProfile, onAddCard, onEditAvatar, onCardClick }) {
       <section className="profile">
         <div className="profile__dark-layout" onClick={onEditAvatar}>
           <img
-            src={avatarURL || avatar}
+            src={avatar || defaultAvatar}
             alt="картинка профиля"
             className="profile__picture"
           />
         </div>
-        <h1 className="profile__name">{userName}</h1>
-        <p className="profile__about">{userAbout}</p>
+        <h1 className="profile__name">{name}</h1>
+        <p className="profile__about">{about}</p>
         <button
           type="button"
           className="profile__button profile__button_type_edit"
