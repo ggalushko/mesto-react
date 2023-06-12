@@ -13,10 +13,10 @@ import { Main } from "./Main";
 
 export function App() {
   useEffect(() => {
-    api
-      .getUserData()
-      .then((userData) => {
+    Promise.all([api.getUserData(), api.getInitialCards()])
+      .then(([userData, cards]) => {
         setCurrentUser(userData);
+        setCards(cards);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -83,24 +83,30 @@ export function App() {
   async function handleCardDelete(card) {
     api
       .deleteCard(card._id)
-      .then(setCards((newCards) => newCards.filter((c) => card._id !== c._id)))
+      .then(() => {
+        setCards((newCards) => newCards.filter((c) => card._id !== c._id));
+      })
       .catch((err) => console.log(err));
   }
 
   function handleUpdateUser(name, about) {
     api
       .editProfile({ name: name, about: about })
-      .then((newInfo) => setCurrentUser(newInfo))
+      .then((newInfo) => {
+        setCurrentUser(newInfo);
+        closeAllPopups();
+      })
       .catch((err) => console.log(err));
-    closeAllPopups();
   }
 
   function handleUpdateAvatar(URL) {
     api
       .changeAvatar(URL)
-      .then((newInfo) => setCurrentUser(newInfo))
+      .then((newInfo) => {
+        setCurrentUser(newInfo);
+        closeAllPopups();
+      })
       .catch((err) => console.log(err));
-    closeAllPopups();
   }
 
   function handleAddPlace(card) {
@@ -116,7 +122,6 @@ export function App() {
       <Header />
       <Main
         cards={cards}
-        setCards={setCards}
         onEditProfile={handleEditProfile}
         onAddCard={handleAddCard}
         onEditAvatar={handleEditAvatar}

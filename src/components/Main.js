@@ -6,7 +6,6 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 export function Main({
   cards,
-  setCards,
   onEditProfile,
   onAddCard,
   onEditAvatar,
@@ -16,15 +15,6 @@ export function Main({
 }) {
   const currentUser = useContext(CurrentUserContext);
   const { name, about, avatar } = currentUser;
-
-  useEffect(() => {
-    api
-      .getInitialCards()
-      .then((cards) => {
-        setCards(cards);
-      })
-      .catch((err) => console.log(err));
-  }, []);
 
   return (
     <main>
