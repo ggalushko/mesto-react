@@ -112,9 +112,11 @@ export function App() {
   function handleAddPlace(card) {
     api
       .addCard(card.name, card.link)
-      .then((newCard) => setCards([newCard, ...cards]))
+      .then((newCard) => {
+        setCards([newCard, ...cards]);
+        closeAllPopups();
+      })
       .catch((err) => console.log(err));
-    closeAllPopups();
   }
 
   return (
